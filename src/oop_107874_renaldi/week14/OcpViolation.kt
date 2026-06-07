@@ -7,7 +7,7 @@ class DiscountCalculator {
             "student" -> price * 0.80
             "member" -> price * 0.85
             "employee" -> price * 0.70
-            // Setiap ada diskon baru (misal: senior/VIP), class ini harus dimodifikasi!
+
             else -> price
         }
     }
