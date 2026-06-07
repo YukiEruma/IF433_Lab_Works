@@ -58,3 +58,27 @@ class SafeOrderProcessor(
         notifier.sendNotification(itemName)
     }
 }
+
+interface PricingStrategy {
+    fun calculate(price: Double): Double
+}
+
+class RegularPricing : PricingStrategy {
+    override fun calculate(price: Double) = price
+}
+
+class VipPricing : PricingStrategy {
+    override fun calculate(price: Double) = price * 0.90
+}
+
+fun main() {
+    val repo = CsvOrderRepository()
+    val notifier = EmailNotifier()
+    val processor = SafeOrderProcessor(repo, notifier)
+
+    val regularPricing = RegularPricing()
+    val vipPricing = VipPricing()
+
+    processor.processOrder("Laptop", regularPricing.calculate(15000000.0), "REGULAR")
+    processor.processOrder("Mouse", vipPricing.calculate(500000.0), "VIP")
+}
